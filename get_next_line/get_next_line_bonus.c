@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asouchet <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/30 15:07:30 by asouchet          #+#    #+#             */
-/*   Updated: 2022/10/30 15:07:32 by asouchet         ###   ########.fr       */
+/*   Created: 2022/11/02 02:25:41 by asouchet          #+#    #+#             */
+/*   Updated: 2022/11/02 02:25:44 by asouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,27 +103,28 @@ char	*ft_new_buffer_start(char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[FD_SIZE];
 	char		*line;
 	int			error;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	error = ft_read_till_sep(fd, &buffer);
+	error = ft_read_till_sep(fd, &buffer[fd]);
 	if (!buffer)
 		return (NULL);
 	if (error == -1)
 		return (ft_free(&buffer));
 	if (error == 0)
 	{
-		line = ft_get_lines(buffer);
-		ft_free(&buffer);
+		line = ft_get_lines(buffer[fd]);
+		ft_free(&buffer[fd]);
 		if (line[0])
 			return (line);
 		free(line);
 		return (NULL);
 	}
-	line = ft_get_lines(buffer);
-	buffer = ft_new_buffer_start(buffer);
+	line = ft_get_lines(buffer[fd]);
+	buffer[fd] = ft_new_buffer_start(buffer[fd]);
 	return (line);
 }
+
