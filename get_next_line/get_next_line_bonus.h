@@ -10,14 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stddef.h> 	// size_t
 # include <sys/types.h> // ssize_t
 # include <stdlib.h> 	// malloc, free
 # include <unistd.h> 	// read
 # include <stdio.h>
+
+# ifndef FD_SIZE
+#  define FD_SIZE 4096
+# endif
 
 // gnl
 char	*get_next_line(int fd);

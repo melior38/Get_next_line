@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdlib.h>
 #include <sys/types.h> //ssize_t library
 #include <unistd.h>
@@ -110,10 +110,10 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	error = ft_read_till_sep(fd, &buffer[fd]);
-	if (!buffer)
+	if (!buffer[fd])
 		return (NULL);
 	if (error == -1)
-		return (ft_free(&buffer));
+		return (ft_free(&buffer[fd]));
 	if (error == 0)
 	{
 		line = ft_get_lines(buffer[fd]);
@@ -127,4 +127,3 @@ char	*get_next_line(int fd)
 	buffer[fd] = ft_new_buffer_start(buffer[fd]);
 	return (line);
 }
-
